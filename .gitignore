@@ -1,0 +1,8 @@
+# Ne jamais mettre ces fichiers sur GitHub
+.env
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+venv/
+*.log

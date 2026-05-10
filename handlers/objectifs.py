@@ -20,7 +20,7 @@ async def cmd_objectifs(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Les objectifs te permettent de :\n"
             "  • Recevoir une alerte quand tu dépenses trop dans une catégorie\n"
             "  • Suivre ton épargne mensuelle\n\n"
-            "Pour en créer un, tape : `/newojectif`",
+            "Pour en créer un, tape : `/newobjectif`",
             parse_mode="Markdown"
         )
         return

@@ -123,9 +123,21 @@ async def cmd_budget(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if revenu <= 0:
         await update.message.reply_text("💵 Renseigne d'abord ton revenu.\n\nTape : `/revenu 150000`", parse_mode="Markdown")
         return
+    depenses_mois = get_depenses_mois(user_id)
+    if not depenses_mois:
+        await update.message.reply_text(
+            "📭 Aucune dépense ce mois-ci.\n\n"
+            "Enregistre quelques dépenses d'abord, puis reviens ici.\n\n"
+            "Exemple : `repas 1500`",
+            parse_mode="Markdown"
+        )
+        return
     await update.message.reply_text("⏳ Calcul en cours...")
-    estimation = estimer_budget_optimal(get_depenses_mois(user_id), revenu)
-    await update.message.reply_text(f"🎯 *Budget optimal pour le mois prochain*\n\n{estimation}", parse_mode="Markdown")
+    try:
+        estimation = estimer_budget_optimal(depenses_mois, revenu)
+        await update.message.reply_text(f"🎯 *Budget optimal pour le mois prochain*\n\n{estimation}", parse_mode="Markdown")
+    except Exception:
+        await update.message.reply_text("⚠️ Impossible de générer l'estimation. Réessaie dans quelques secondes.")
 
 async def cmd_revenu_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
